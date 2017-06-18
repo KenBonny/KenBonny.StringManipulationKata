@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "KenBonny.StringManipulationKata": {
+      "commandName": "Project",
+      "commandLineArgs": "upper -t 'sample text'"
+    }
+  }
+}
