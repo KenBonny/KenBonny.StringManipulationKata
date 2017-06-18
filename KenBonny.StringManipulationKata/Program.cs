@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using CommandLine;
+using KenBonny.StringManipulationKata.Adapters;
 using KenBonny.StringManipulationKata.Capitalisers;
 using KenBonny.StringManipulationKata.Commands;
 
@@ -29,9 +30,13 @@ namespace KenBonny.StringManipulationKata
                         (AlternativeAlternatingWordCaseCommand cmd) => InitialiseCapitaliser(cmd),
                         (CamelCaseCommand cmd) => InitialiseCapitaliser(cmd),
                         errors => InitialiseCapitaliser(new ErrorCommand {Text = string.Join(", ", errors)}));
-
+            
             var capitalisedText = _capitaliser.Capitalise(command);
             Console.WriteLine("Capitalised text: " + capitalisedText);
+            
+            var noNaughtyWordsCapitaliser = new NaughtyWordsAdapter(_capitaliser, new [] {"fuck", "shit"});
+            var cleanCapitalisedText = noNaughtyWordsCapitaliser.Capitalise(command);
+            Console.WriteLine("Capitalised text without naughty words: " + cleanCapitalisedText);
         }
 
         private static Command InitialiseCapitaliser(Command command)
