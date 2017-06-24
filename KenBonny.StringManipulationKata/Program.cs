@@ -41,22 +41,19 @@ namespace KenBonny.StringManipulationKata
 
         private static Command InitialiseCapitaliser(Command command)
         {
-            if(command is AllLowerCaseCommand)
-                _capitaliser = new AllLowerCaseCapitaliser();
-            if(command is AllUpperCaseCommand)
-                _capitaliser = new AllUpperCaseCapitaliser();
-            if(command is AlternatingCaseCommand)
-                _capitaliser = new AlternatingCaseCapitaliser();
-            if(command is AlternativeAlternatingCaseCommand)
-                _capitaliser = new AlternativeAlternatingCaseCapitaliser();
-            if(command is AlternatingWordCaseCommand)
-                _capitaliser = new AlternatingWordCaseCapitaliser();
-            if(command is AlternativeAlternatingWordCaseCommand)
-                _capitaliser = new AlternativeAlternatingWordCaseCapitaliser();
-            if(command is CamelCaseCommand)
-                _capitaliser = new CamelCaseCapitaliser();
-            if(command is ErrorCommand)
-                _capitaliser = new ErrorCapitaliser();
+            var capitalisers = new Dictionary<Type, ICapitaliser>
+            {
+                {typeof(AllLowerCaseCommand), new AllLowerCaseCapitaliser()},
+                {typeof(AllUpperCaseCommand), new AllUpperCaseCapitaliser()},
+                {typeof(AlternatingCaseCommand), new AlternatingCaseCapitaliser()},
+                {typeof(AlternativeAlternatingCaseCommand), new AlternativeAlternatingCaseCapitaliser()},
+                {typeof(AlternatingWordCaseCommand), new AlternatingWordCaseCapitaliser()},
+                {typeof(AlternativeAlternatingWordCaseCommand), new AlternativeAlternatingWordCaseCapitaliser()},
+                {typeof(CamelCaseCommand), new CamelCaseCapitaliser()},
+                {typeof(ErrorCommand), new ErrorCapitaliser()}
+            };
+
+            _capitaliser = capitalisers[command.GetType()];
             
             return command;
         }
